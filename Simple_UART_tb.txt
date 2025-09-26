@@ -1,0 +1,51 @@
+`timescale 1ns / 1ps
+
+module uart_tb;
+  reg clk = 0, rst = 0;
+  reg [7:0] dintx;
+  reg newd;
+  wire tx; 
+  wire [7:0] doutrx;
+  wire donetx;
+  wire donerx;
+ 
+  uart_top #(1000000, 9600) dut (
+    .clk(clk),
+    .rst(rst),
+    .rx(tx),         
+    .dintx(dintx),
+    .newd(newd),
+    .tx(tx),
+    .doutrx(doutrx),
+    .donetx(donetx),
+    .donerx(donerx)
+  );
+  
+  
+  always #5 clk = ~clk;
+
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1);
+
+    
+    rst = 1;
+    repeat(5) @(posedge clk);
+    rst = 0;
+
+
+    for (int i = 0; i < 10; i++) begin
+      newd = 1;
+      dintx = $urandom_range(255,0);
+
+      @(posedge donetx);   
+      newd = 0;
+
+      @(posedge donerx);   
+      $display("TX: %0h -> RX: %0h", dintx, doutrx);
+    end
+
+    $finish;
+  end
+
+endmodule
