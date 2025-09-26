@@ -1,6 +1,7 @@
  Universal Asynchronous Receiver-Transmitter (UART) 
 
 The Universal Asynchronous Receiver-Transmitter (UART) is one of the most widely used hardware communication protocols for serial data exchange.
+
 It provides a simple way to transmit and receive data bit by bit over a single line, without requiring a separate clock signal between the sender and receiver.
 
 UART is asynchronous → meaning no shared clock is transmitted. Instead, both devices agree on a baud rate (speed of communication) beforehand.
@@ -30,20 +31,20 @@ Formula:
 
 Baud Rate= fclk/Clock Divisor
 
-fclk	​= System clock frequency (e.g., 50 MHz)
+fclk	​= System clock frequency (e.g., 1MHz)
 
 Clock Divisor = Number of clock cycles per UART bit​
 
 
 Example:
 
-System Clock = 50 MHz
+System Clock = 1 MHz
 
 Baud Rate = 9600 bps
 
-Clock Divisor = 50,000,000/9600 ~ 5208
+Clock Divisor = 1000000/9600 ~ 104.1667
 
-So, UART must hold each bit for 5208 clock cycles before shifting the next.
+So, UART must hold each bit for 104 clock cycles before shifting the next.
 
 UART Transmitter (TX) Working
 
